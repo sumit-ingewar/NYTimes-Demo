@@ -14,18 +14,10 @@ object ArticleMapper {
         arrayList.forEach {
             val articleItem = ArticleItem(
                 url = it.url,
-                adx_keywords = it.adx_keywords,
-                section = it.section,
                 byline = it.byline,
                 title = it.title,
-                abstract = it.abstract,
                 published_date = it.published_date,
-                source = it.source,
-                id = it.id,
-                asset_id = it.asset_id,
-                views = it.views,
                 imageUrl = getImageUrl(it.media)
-
             )
             articleItem.viewType = ArticleViewType.VIEW_TYPE_ARTICLE
             list.add(articleItem)
