@@ -1,0 +1,64 @@
+package com.sumit.test.base
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import dagger.android.support.DaggerFragment
+import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
+
+abstract class BaseFragment<VDB : ViewDataBinding,
+        BVM : BaseViewModel<*>> : DaggerFragment() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    lateinit var injectedViewModel: BVM
+
+    lateinit var viewDataBinding: VDB
+
+    abstract val viewModel: Class<BVM>
+
+    abstract fun getBindingVariable(): Int
+
+    private val disposableDelegate = lazy { CompositeDisposable() }
+
+    protected val compositeDisposable by disposableDelegate
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        injectedViewModel = ViewModelProviders.of(this, viewModelFactory).get(viewModel)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        viewDataBinding = DataBindingUtil.inflate(
+            inflater,
+            getLayoutId(),
+            container,
+            false
+        )
+
+        return viewDataBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewDataBinding.setVariable(getBindingVariable(), injectedViewModel)
+        initUserInterface(view)
+    }
+
+    protected abstract fun getLayoutId(): Int
+
+    protected abstract fun initUserInterface(view: View?)
+}
