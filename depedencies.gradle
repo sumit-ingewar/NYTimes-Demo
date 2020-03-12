@@ -6,7 +6,7 @@ ext.app = [
 ]
 
 ext.packageId = [
-        comera: 'com.innovativesolutions.comera',]
+        packageId: 'com.sumit.nytimesdemo',]
 ext.repos = {
     RepositoryHandler handler ->
         handler.google()

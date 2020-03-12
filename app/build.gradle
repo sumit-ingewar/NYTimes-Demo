@@ -10,7 +10,7 @@ android {
     compileSdkVersion app.compileSdk
     buildToolsVersion app.buildTools
     defaultConfig {
-        applicationId "com.is.core.comera"
+        applicationId app.packageId
         minSdkVersion app.minSdk
         targetSdkVersion app.targetSdk
         versionCode 1
