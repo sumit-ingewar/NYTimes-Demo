@@ -18,7 +18,9 @@ ext.java = [
         targetCompatibility: JavaVersion.VERSION_1_8,
 ]
 
-ext.endPoints = [dev: '"https://demourl.com',]
+ext.endPoints = [
+        dev: 'https://api.nytimes.com/',
+]
 
 def libraries = [
 

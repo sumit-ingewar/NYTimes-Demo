@@ -27,7 +27,7 @@ android {
 
         release {
             buildConfigField("String", "APIKEY", "\"qPl6q0eNiXO6FVTOlhhB00Steu41eVNh\"")
-            buildConfigField("String", "URL", "\"https://api.nytimes.com/\"")
+            buildConfigField("String", "URL", endPoints.dev)
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
