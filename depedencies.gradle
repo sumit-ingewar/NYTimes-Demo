@@ -1,0 +1,157 @@
+ext.app = [
+        minSdk    : 21,
+        targetSdk : 29,
+        compileSdk: 29,
+        buildTools: '29.0.2',
+]
+
+ext.packageId = [
+        comera: 'com.innovativesolutions.comera',]
+ext.repos = {
+    RepositoryHandler handler ->
+        handler.google()
+        handler.jcenter()
+}
+
+ext.java = [
+        sourceCompatibility: JavaVersion.VERSION_1_8,
+        targetCompatibility: JavaVersion.VERSION_1_8,
+]
+
+ext.endPoints = [dev: '"https://demourl.com',]
+
+def libraries = [
+
+        //region GRADLE
+        androidGradlePlugin: "com.android.tools.build:gradle:3.6.1",
+        // endregion
+
+        //region KOTLIN
+        kotlinGradlePlugin : "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.31",
+        kotlin             : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.31",
+        kotlinReflect      : "org.jetbrains.kotlin:kotlin-reflect:1.3.31",
+        kotlinExtensions   : "androidx.core:core-ktx:1.2.0",
+        // endregion
+
+        //region SUPPORT
+        appCompatV7        : "androidx.appcompat:appcompat:1.1.0",
+        constraintLayout   : "androidx.constraintlayout:constraintlayout:1.1.3",
+        recyclerView       : "androidx.recyclerview:recyclerview:1.2.0-alpha01",
+        navigationFragment : 'androidx.navigation:navigation-fragment-ktx:2.1.0',
+        navigationUi       : 'androidx.navigation:navigation-ui-ktx:2.2.1',
+        // endregion
+
+        //region RxJava
+        rxJava             : "io.reactivex.rxjava2:rxjava:2.2.5",
+        rxKotlin           : "io.reactivex.rxjava2:rxkotlin:2.4.0",
+        rxAndroid          : "io.reactivex.rxjava2:rxandroid:2.1.1",
+        javaInject         : "javax.inject:javax.inject:1",
+        // endregion
+
+        //region JETIFIER
+        jetifier           : "com.android.tools.build.jetifier:jetifier-processor:1.0.0-beta09",
+        jetifierCore       : "com.android.tools.build.jetifier:jetifier-core:1.0.0-beta09",
+        // endregion
+
+        //region DAGGER
+        dagger             : "com.google.dagger:dagger:2.22.1",
+        daggerAndroid      : "com.google.dagger:dagger-android:2.22.1",
+        daggerSupport      : "com.google.dagger:dagger-android-support:2.22.1",
+        daggerCompiler     : "com.google.dagger:dagger-compiler:2.22.1",
+        daggerProcessor    : "com.google.dagger:dagger-android-processor:2.22.1",
+        // endregion
+
+        //region DATABINDING
+        dataBinding        : "com.android.databinding:compiler:3.1.0-aplha06",
+        // endregion
+
+        //region LIFECYCLE
+        lifecycle          : "androidx.lifecycle:lifecycle-extensions:2.1.0",
+        lifecycleCompiler  : "androidx.lifecycle:lifecycle-compiler:2.1.0",
+        // endregion
+
+        //region NETWORKING
+        gson               : "com.google.code.gson:gson:2.8.5",
+        retrofit           : "com.squareup.retrofit2:retrofit:2.5.0",
+        retrofitConverter  : "com.squareup.retrofit2:converter-gson:2.5.0",
+        retrofitAdapter    : "com.squareup.retrofit2:adapter-rxjava2:2.5.0",
+        okhttp             : "com.squareup.okhttp3:okhttp:3.12.1",
+        okhttpInterceptor  : "com.squareup.okhttp3:logging-interceptor:3.12.1",
+        // endregion
+
+        //region GLIDE
+        glide              : "com.github.bumptech.glide:glide:4.10.0",
+        glideCompiler      : "com.github.bumptech.glide:compiler:4.10.0",
+        // endregion
+
+        //region LOGGING
+        timber             : "com.jakewharton.timber:timber:4.7.1",
+        // endregion
+
+        //region TEST
+        junit              : "junit:junit:4.12",
+        espresso           : "androidx.test.espresso:espresso-core:3.2.0"
+        // endregion
+]
+
+static def addDepedency(config, dependency) {
+    [configuration: config, depedency: dependency]
+}
+
+ext.addDepedencies = {
+    DependencyHandler handler, dependencies ->
+        dependencies.each {
+            handler.add(it.configuration, it.depedency)
+        }
+}
+
+ext.gradlePlugins = [
+        android : libraries.androidGradlePlugin,
+        kotlin  : libraries.kotlin,
+        jetifier: libraries.jetifier,        // Add navigations controller here
+]
+
+ext.appDepedencies = [
+        addDepedency("implementation", libraries.kotlin),
+        addDepedency("implementation", libraries.kotlinExtensions),
+        addDepedency("implementation", libraries.appCompatV7),
+        addDepedency("implementation", libraries.constraintLayout),
+        addDepedency("implementation", libraries.recyclerView),
+        addDepedency("implementation", libraries.navigationFragment),
+        addDepedency("implementation", libraries.navigationUi),
+        addDepedency("implementation", libraries.lifecycle),
+        addDepedency("kapt", libraries.lifecycleCompiler),
+        addDepedency("implementation", libraries.javaInject),
+        addDepedency("implementation", libraries.rxJava),
+        addDepedency("implementation", libraries.rxKotlin),
+        addDepedency("implementation", libraries.rxAndroid),
+        addDepedency("api", libraries.dagger),
+        addDepedency("api", libraries.daggerSupport),
+        addDepedency("kapt", libraries.daggerCompiler),
+        addDepedency("kapt", libraries.daggerProcessor),
+        addDepedency("implementation", libraries.jetifier),
+        addDepedency("implementation", libraries.jetifierCore),
+        addDepedency("implementation", libraries.dataBinding),
+        addDepedency("implementation", libraries.glide),
+        addDepedency("kapt", libraries.glideCompiler),
+        addDepedency("testImplementation", libraries.junit),
+        addDepedency("androidTestImplementation", libraries.espresso),
+]
+
+ext.coreDepedencies = [
+        addDepedency("implementation", libraries.kotlin),
+        addDepedency("implementation", libraries.kotlinExtensions),
+        addDepedency("implementation", libraries.gson),
+        addDepedency("implementation", libraries.retrofit),
+        addDepedency("implementation", libraries.retrofitConverter),
+        addDepedency("implementation", libraries.retrofitAdapter),
+        addDepedency("implementation", libraries.okhttp),
+        addDepedency("implementation", libraries.okhttpInterceptor),
+        addDepedency("implementation", libraries.rxJava),
+        addDepedency("implementation", libraries.javaInject),
+        addDepedency("implementation", libraries.rxKotlin),
+        addDepedency("implementation", libraries.rxAndroid),
+        addDepedency("implementation", libraries.timber),
+        addDepedency("implementation", libraries.jetifier),
+        addDepedency("implementation", libraries.jetifierCore),
+]
