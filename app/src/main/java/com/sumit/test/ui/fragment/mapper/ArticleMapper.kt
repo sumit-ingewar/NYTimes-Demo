@@ -27,9 +27,13 @@ object ArticleMapper {
     }
 
     private fun getImageUrl(mediaList: ArrayList<Media>): String {
-        if (mediaList[0].type == "image") {
-            return mediaList[0].mediaMetadata[0].url
+
+        if (mediaList.isNotEmpty()) {
+            if (mediaList[0].type == "image") {
+                return mediaList[0].mediaMetadata[0].url
+            }
         }
+
         return String.empty
     }
 }

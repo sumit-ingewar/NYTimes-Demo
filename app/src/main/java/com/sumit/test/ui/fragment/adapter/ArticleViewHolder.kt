@@ -12,8 +12,11 @@ class ArticleViewHolder(
     override fun bindItem(item: Any) {
         articleRecyclerItemBinding.data = item as ArticleItem
 
-        Glide.with(articleRecyclerItemBinding.imageViewArticleImage.context)
-            .load(item.imageUrl)
-            .into(articleRecyclerItemBinding.imageViewArticleImage)
+        if (item.imageUrl.isNotBlank()) {
+            Glide.with(articleRecyclerItemBinding.imageViewArticleImage.context)
+                .load(item.imageUrl)
+                .into(articleRecyclerItemBinding.imageViewArticleImage)
+        }
+
     }
 }
