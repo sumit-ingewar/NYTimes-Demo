@@ -12,6 +12,7 @@ import com.sumit.test.R
 import com.sumit.test.base.BaseFragment
 import com.sumit.test.base.ItemClickListener
 import com.sumit.test.databinding.FragmentListBinding
+import com.sumit.test.databinding.FragmentListBindingImpl
 import com.sumit.test.ui.fragment.adapter.ArticleAdapter
 import com.sumit.test.ui.fragment.item.ArticleItem
 import kotlinx.android.synthetic.main.fragment_list.*
@@ -29,7 +30,7 @@ class ListFragment : BaseFragment<FragmentListBinding, ListFragmentViewModel>(),
 
     override val viewModel = ListFragmentViewModel::class.java
 
-    override fun getBindingVariable() = BR._all
+    override fun getBindingVariable() = BR.listViewModel
 
     override fun getLayoutId() = R.layout.fragment_list
 
@@ -50,12 +51,12 @@ class ListFragment : BaseFragment<FragmentListBinding, ListFragmentViewModel>(),
 
         articleAdapter = ArticleAdapter(this)
         recyclerViewArticles.apply {
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = LinearLayoutManager(context)
             adapter = articleAdapter
             addItemDecoration(
                 DividerItemDecoration(
-                    recyclerViewArticles.context,
-                    LinearLayoutManager(activity).orientation
+                    context,
+                    LinearLayoutManager(context).orientation
                 )
             )
         }

@@ -19,7 +19,7 @@ class DetailsFragment : BaseFragment<FragmentListBinding, DetailFragmentViewMode
 
     override val viewModel = DetailFragmentViewModel::class.java
 
-    override fun getBindingVariable() = BR._all
+    override fun getBindingVariable() = BR.detailFragmentViewModel
 
     override fun getLayoutId() = R.layout.fragment_details
 

@@ -10,7 +10,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityViewModel>(),
     override val viewModel: Class<MainActivityViewModel>
         get() = MainActivityViewModel::class.java
 
-    override fun getBindingVariable() = BR._all
+    override fun getBindingVariable() = BR.activityViewModel
 
     override val layoutId = R.layout.activity_main
 
