@@ -14,6 +14,7 @@ import com.sumit.test.R
 import com.sumit.test.base.BaseFragment
 import com.sumit.test.base.ItemClickListener
 import com.sumit.test.databinding.FragmentListBinding
+import com.sumit.test.databinding.FragmentListBindingImpl
 import com.sumit.test.ui.fragment.adapter.ArticleAdapter
 import com.sumit.test.ui.fragment.adapter.ArticleDiffUtils
 import com.sumit.test.ui.fragment.item.ArticleItem
