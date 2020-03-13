@@ -6,7 +6,9 @@ ext.app = [
 ]
 
 ext.packageId = [
-        packageId: 'com.sumit.nytimesdemo',]
+        packageId: 'com.sumit.nytimesdemo',
+]
+
 ext.repos = {
     RepositoryHandler handler ->
         handler.google()
@@ -64,7 +66,7 @@ def libraries = [
         // endregion
 
         //region DATABINDING
-        dataBinding        : "com.android.databinding:compiler:3.1.0-aplha06",
+        dataBinding        : "com.android.databinding:compiler:3.2.0",
         // endregion
 
         //region LIFECYCLE
@@ -92,8 +94,12 @@ def libraries = [
 
         //region TEST
         junit              : "junit:junit:4.12",
-        espresso           : "androidx.test.espresso:espresso-core:3.2.0"
+        espresso           : "androidx.test.espresso:espresso-core:3.2.0",
         // endregion
+
+        //region UTIL
+        leakCanary         : "com.squareup.leakcanary:leakcanary-android:2.2"
+        //endregion
 ]
 
 static def addDependency(config, dependency) {
@@ -138,6 +144,7 @@ ext.appDepedencies = [
         addDependency("kapt", libraries.glideCompiler),
         addDependency("testImplementation", libraries.junit),
         addDependency("androidTestImplementation", libraries.espresso),
+        addDependency("debugImplementation", libraries.leakCanary),
 ]
 
 ext.coreDepedencies = [
