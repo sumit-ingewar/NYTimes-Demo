@@ -8,8 +8,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.sumit.core.DemoLogger
 import dagger.android.support.DaggerFragment
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.fragment_list.view.*
 import javax.inject.Inject
 
 abstract class BaseFragment<VDB : ViewDataBinding,
@@ -20,7 +22,7 @@ abstract class BaseFragment<VDB : ViewDataBinding,
 
     lateinit var injectedViewModel: BVM
 
-    lateinit var viewDataBinding: VDB
+     var viewDataBinding: VDB? = null
 
     abstract val viewModel: Class<BVM>
 
@@ -29,7 +31,6 @@ abstract class BaseFragment<VDB : ViewDataBinding,
     private val disposableDelegate = lazy { CompositeDisposable() }
 
     protected val compositeDisposable by disposableDelegate
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,20 +43,26 @@ abstract class BaseFragment<VDB : ViewDataBinding,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         viewDataBinding = DataBindingUtil.inflate(
             inflater,
             getLayoutId(),
             container,
             false
         )
-
-        return viewDataBinding.root
+        return viewDataBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewDataBinding.setVariable(getBindingVariable(), injectedViewModel)
+        viewDataBinding!!.setVariable(getBindingVariable(), injectedViewModel)
+        viewDataBinding!!.lifecycleOwner = viewLifecycleOwner
         initUserInterface(view)
+    }
+
+    override fun onDestroyView() {
+        viewDataBinding = null
+        super.onDestroyView()
     }
 
     protected abstract fun getLayoutId(): Int
