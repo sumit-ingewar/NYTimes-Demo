@@ -84,4 +84,8 @@ class ListFragment : BaseFragment<FragmentListBinding, ListFragmentViewModel>(),
         Toast.makeText(activity, error, Toast.LENGTH_LONG).show()
     }
 
+    override fun clearResources() {
+        recyclerViewArticles.adapter = null
+    }
+
 }

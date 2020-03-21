@@ -22,7 +22,7 @@ abstract class BaseFragment<VDB : ViewDataBinding,
 
     lateinit var injectedViewModel: BVM
 
-     var viewDataBinding: VDB? = null
+    var viewDataBinding: VDB? = null
 
     abstract val viewModel: Class<BVM>
 
@@ -62,10 +62,13 @@ abstract class BaseFragment<VDB : ViewDataBinding,
 
     override fun onDestroyView() {
         viewDataBinding = null
+        clearResources()
         super.onDestroyView()
     }
 
     protected abstract fun getLayoutId(): Int
 
     protected abstract fun initUserInterface(view: View?)
+
+    protected abstract fun clearResources()
 }

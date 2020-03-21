@@ -55,5 +55,12 @@ class DetailsFragment : BaseFragment<FragmentListBinding, DetailFragmentViewMode
 
     }
 
+    override fun clearResources() {
+        // Loads blank page , clearing arr previous webpage resources
+        webViewArticle.loadUrl("about:blank")
+
+        webViewArticle.destroy()
+    }
+
 
 }
