@@ -19,7 +19,7 @@ ext.java = [
 ]
 
 ext.endPoints = [
-        dev: 'https://api.nytimes.com/',
+        dev: "\"https://api.nytimes.com/\"",
 ]
 
 def libraries = [

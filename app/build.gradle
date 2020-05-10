@@ -33,6 +33,30 @@ android {
         }
     }
 
+    flavorDimensions 'app' , 'environment'
+
+    productFlavors {
+        comera {
+            dimension 'app'
+            ext {
+                dev = endPoints.dev
+            }
+        }
+
+        dev {
+            dimension 'environment'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all{
+            def flavours = variant.productFlavors
+            def app = flavours[0]
+            def environment = flavours[1]
+            variant.buildConfigField('String', 'BASE_URL', "${app[environment.name]}")
+        }
+    }
+
     compileOptions {
         sourceCompatibility java.sourceCompatibility
         targetCompatibility java.targetCompatibility

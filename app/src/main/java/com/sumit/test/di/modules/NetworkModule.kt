@@ -16,6 +16,6 @@ class NetworkModule {
         gsonProvider: GsonProvider
     ) = NetworkUtil(
         gsonProvider = gsonProvider,
-        endPoint = BuildConfig.URL
+        endPoint = BuildConfig.BASE_URL
     )
 }
