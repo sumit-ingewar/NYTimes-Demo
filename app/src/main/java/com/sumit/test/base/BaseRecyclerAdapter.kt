@@ -1,6 +1,7 @@
 package com.sumit.test.base
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class BaseRecyclerAdapter<T>(
@@ -45,6 +46,15 @@ abstract class BaseRecyclerAdapter<T>(
     fun clearItems() {
         items.clear()
         notifyDataSetChanged()
+    }
+
+    fun diffUtilRefresh(
+        diffResult: DiffUtil.DiffResult,
+        newList: ArrayList<T>
+    ) {
+        items.clear()
+        items.addAll(newList)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     protected abstract fun createBaseViewHolder(
