@@ -1,10 +1,12 @@
 package com.sumit.test.ui.fragment
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sumit.test.BR
@@ -12,11 +14,10 @@ import com.sumit.test.R
 import com.sumit.test.base.BaseFragment
 import com.sumit.test.base.ItemClickListener
 import com.sumit.test.databinding.FragmentListBinding
-import com.sumit.test.databinding.FragmentListBindingImpl
 import com.sumit.test.ui.fragment.adapter.ArticleAdapter
+import com.sumit.test.ui.fragment.adapter.ArticleDiffUtils
 import com.sumit.test.ui.fragment.item.ArticleItem
 import kotlinx.android.synthetic.main.fragment_list.*
-import java.lang.Exception
 
 
 class ListFragment : BaseFragment<FragmentListBinding, ListFragmentViewModel>(),
@@ -66,8 +67,18 @@ class ListFragment : BaseFragment<FragmentListBinding, ListFragmentViewModel>(),
 
     override fun setAdapter(list: ArrayList<Any>) {
         this.list = list
-        articleAdapter.setItems(list)
 
+        val diffCallback = ArticleDiffUtils(articleAdapter.getItems(), list)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        val recyclerViewState: Parcelable? =
+            recyclerViewArticles.layoutManager?.onSaveInstanceState()
+
+        articleAdapter.diffUtilRefresh(diffResult, list)
+
+        recyclerViewState?.let {
+            recyclerViewArticles.layoutManager?.onRestoreInstanceState(it)
+        }
     }
 
     override fun onItemClick(position: Int, view: View) {
