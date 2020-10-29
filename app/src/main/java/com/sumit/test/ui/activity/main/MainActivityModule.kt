@@ -1,8 +1,9 @@
-package com.sumit.test.ui.activity
+package com.sumit.test.ui.activity.main
 
 import com.sumit.core.di.scopes.PerActivity
 import com.sumit.core.di.scopes.PerFragment
 import com.sumit.test.di.modules.ActivityModule
+import com.sumit.test.ui.activity.main.MainActivity
 import com.sumit.test.ui.fragment.ListFragment
 import com.sumit.test.ui.fragment.details.DetailsFragment
 import dagger.Binds

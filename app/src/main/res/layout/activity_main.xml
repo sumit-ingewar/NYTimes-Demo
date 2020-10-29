@@ -6,7 +6,7 @@
 
         <variable
             name="activityViewModel"
-            type="com.sumit.test.ui.activity.MainActivityViewModel" />
+            type="com.sumit.test.ui.activity.main.MainActivityViewModel" />
     </data>
 
     <FrameLayout

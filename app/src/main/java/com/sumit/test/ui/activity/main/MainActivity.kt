@@ -1,4 +1,4 @@
-package com.sumit.test.ui.activity
+package com.sumit.test.ui.activity.main
 
 import com.sumit.test.BR
 import com.sumit.test.R

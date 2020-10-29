@@ -3,7 +3,7 @@ package com.sumit.test.di.modules
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sumit.test.di.key.ViewModelKey
-import com.sumit.test.ui.activity.MainActivityViewModel
+import com.sumit.test.ui.activity.main.MainActivityViewModel
 import com.sumit.test.ui.fragment.ListFragmentViewModel
 import com.sumit.test.ui.fragment.details.DetailFragmentViewModel
 import com.sumit.test.viewmodelprovider.ViewModelFactory
