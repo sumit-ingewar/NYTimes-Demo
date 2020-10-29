@@ -36,7 +36,7 @@ android {
     flavorDimensions 'app' , 'environment'
 
     productFlavors {
-        comera {
+        nytimes {
             dimension 'app'
             ext {
                 dev = endPoints.dev
@@ -54,6 +54,7 @@ android {
             def app = flavours[0]
             def environment = flavours[1]
             variant.buildConfigField('String', 'BASE_URL', "${app[environment.name]}")
+            outputFileName = "${app.name}_${environment.name}_${variant.versionName}.apk"
         }
     }
 
