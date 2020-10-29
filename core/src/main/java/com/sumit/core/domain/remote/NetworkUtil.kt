@@ -1,7 +1,7 @@
 package com.sumit.core.domain.remote
 
+import com.sumit.core.extensions.safeGet
 import com.sumit.core.BuildConfig
-import com.sumit.core.safeGet
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response

@@ -1,6 +1,6 @@
 package com.sumit.test.ui.fragment.item
 
-import com.sumit.core.empty
+import com.sumit.core.extensions.empty
 
 data class ArticleItem(
     val url: String = String.empty,

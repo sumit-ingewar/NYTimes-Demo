@@ -58,7 +58,7 @@ abstract class BaseActivity<VDB : ViewDataBinding, BVM : BaseViewModel<*>> :
 
     override fun onDestroy() {
         if(disposableDelegate.isInitialized()){
-            compositeDisposable?.dispose()
+            compositeDisposable.dispose()
         }
         super.onDestroy()
     }

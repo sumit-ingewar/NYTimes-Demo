@@ -2,9 +2,9 @@ package com.sumit.test.viewmodelprovider
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.sumit.core.extensions.safeGet
 import com.sumit.core.DemoLogger
 import com.sumit.core.di.scopes.PerApplication
-import com.sumit.core.safeGet
 import java.lang.Exception
 import java.lang.IllegalArgumentException
 import java.lang.RuntimeException

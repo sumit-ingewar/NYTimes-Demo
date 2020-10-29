@@ -7,5 +7,5 @@ import javax.inject.Inject
 
 
 class UiThread @Inject constructor() : PostExecutionThread {
-    override fun schedular(): Scheduler = AndroidSchedulers.mainThread()
+    override fun scheduler(): Scheduler = AndroidSchedulers.mainThread()
 }

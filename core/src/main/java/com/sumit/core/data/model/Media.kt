@@ -1,7 +1,8 @@
 package com.sumit.core.data.model
 
+import com.sumit.core.extensions.empty
 import com.google.gson.annotations.SerializedName
-import com.sumit.core.empty
+
 
 data class Media(
     @SerializedName("type") val type: String = String.empty,
