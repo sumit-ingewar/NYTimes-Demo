@@ -1,8 +1,8 @@
 package com.sumit.test.ui.fragment.mapper
 
-import com.sumit.core.extensions.empty
 import com.sumit.core.data.model.ArticleResponse
 import com.sumit.core.data.model.Media
+import com.sumit.core.extensions.empty
 import com.sumit.test.ui.fragment.item.ArticleItem
 import com.sumit.test.ui.fragment.item.ArticleViewType
 

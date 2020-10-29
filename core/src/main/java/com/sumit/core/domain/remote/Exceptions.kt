@@ -1,7 +1,6 @@
 package com.sumit.core.domain.remote
 
 import java.io.IOException
-import java.lang.Exception
 
 class HTTPBadRequest constructor(message: String) : Throwable(message){
     constructor() : this("Bad Request")

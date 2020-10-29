@@ -1,7 +1,7 @@
 package com.sumit.core.domain.remote
 
-import com.sumit.core.extensions.empty
 import com.google.gson.annotations.SerializedName
+import com.sumit.core.extensions.empty
 
 data class BaseError(
     @SerializedName("errors")

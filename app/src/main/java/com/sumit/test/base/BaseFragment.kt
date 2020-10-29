@@ -8,10 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.sumit.core.DemoLogger
 import dagger.android.support.DaggerFragment
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.fragment_list.view.*
 import javax.inject.Inject
 
 abstract class BaseFragment<VDB : ViewDataBinding,

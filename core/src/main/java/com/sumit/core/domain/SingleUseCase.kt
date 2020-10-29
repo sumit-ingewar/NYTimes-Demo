@@ -1,12 +1,12 @@
 package com.sumit.core.domain
 
-import com.sumit.core.extensions.empty
-import com.sumit.core.extensions.safeGet
 import com.google.gson.Gson
 import com.sumit.core.DemoLogger
 import com.sumit.core.domain.executor.PostExecutionThread
 import com.sumit.core.domain.remote.*
 import com.sumit.core.domain.rxcallback.CallbackWrapper
+import com.sumit.core.extensions.empty
+import com.sumit.core.extensions.safeGet
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable

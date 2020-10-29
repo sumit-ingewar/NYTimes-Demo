@@ -8,7 +8,6 @@ import com.sumit.core.domain.rxcallback.CallbackWrapper
 import com.sumit.core.util.ApiErrorMessages
 import com.sumit.test.BuildConfig
 import com.sumit.test.base.BaseViewModel
-import com.sumit.test.ui.fragment.item.ArticleItem
 import com.sumit.test.ui.fragment.item.ArticleItemViewType
 import com.sumit.test.ui.fragment.item.ArticleViewType
 import com.sumit.test.ui.fragment.mapper.ArticleMapper
