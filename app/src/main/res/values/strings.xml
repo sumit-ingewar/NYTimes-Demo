@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NYTimes Demo</string>
+    <string name="theme">App Theme</string>
 </resources>

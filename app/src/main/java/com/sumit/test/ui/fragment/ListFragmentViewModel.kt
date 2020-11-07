@@ -54,7 +54,7 @@ class ListFragmentViewModel @Inject constructor(
     fun getEmptyList(): ArrayList<Any> {
         val list = ArrayList<Any>()
 
-        for (i in 0 until 3) {
+        for (i in 0 until 10) {
             val viewType = ArticleItemViewType()
             viewType.viewType = ArticleViewType.EMPTY_TYPE_ARTICLE
             list.add(viewType)

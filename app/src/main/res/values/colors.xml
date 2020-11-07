@@ -4,7 +4,9 @@
     <color name="colorPrimaryDark">#703DAF</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="toolBarTitle">#FFFFFF</color>
     <color name="blackShade">#333333</color>
 
     <color name="grey">#BBBBBB</color>
+    <color name="splash_background">#703DAF</color>
 </resources>
