@@ -17,29 +17,35 @@ class ListFragmentViewModel @Inject constructor(
     private val articleUseCase: ArticleUseCase
 ) : BaseViewModel<ListFragmentNavigator>() {
 
+    var articleList = arrayListOf<Any>()
 
     companion object {
         const val TAG = "ListFragmentViewModel"
     }
 
-    fun callArticleApi() {
+    fun getArticlesList() {
 
-        addDisposable(
-            articleUseCase.execute(
-                ArticleSubscriber(),
-                ArticleUseCase.Params.create(
-                    BuildConfig.APIKEY
+        if (articleList.isEmpty()) {
+            getNavigator()?.setAdapter(getEmptyList())
+            addDisposable(
+                articleUseCase.execute(
+                    ArticleSubscriber(),
+                    ArticleUseCase.Params.create(
+                        BuildConfig.APIKEY
+                    )
                 )
             )
-        )
+        } else {
+            getNavigator()?.setAdapter(articleList)
+        }
     }
 
-    inner class ArticleSubscriber() : CallbackWrapper<ArticleParentResponse>() {
+    inner class ArticleSubscriber : CallbackWrapper<ArticleParentResponse>() {
 
         override fun onApiSuccess(response: ArticleParentResponse) {
             if (response.status == "OK") {
-                val list = ArticleMapper.getMapperArticleList(response.results)
-                getNavigator()?.setAdapter(list)
+                articleList = ArticleMapper.getMapperArticleList(response.results)
+                getNavigator()?.setAdapter(articleList)
             }
             DemoLogger.e(TAG, response.copyright)
         }
@@ -51,7 +57,7 @@ class ListFragmentViewModel @Inject constructor(
         }
     }
 
-    fun getEmptyList(): ArrayList<Any> {
+    private fun getEmptyList(): ArrayList<Any> {
         val list = ArrayList<Any>()
 
         for (i in 0 until 10) {
