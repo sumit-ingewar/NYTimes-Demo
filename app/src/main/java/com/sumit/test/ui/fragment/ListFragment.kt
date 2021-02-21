@@ -25,7 +25,7 @@ class ListFragment : BaseFragment<FragmentListBinding, ListFragmentViewModel>(),
 
     // region VARIABLES
 
-    private lateinit var articleAdapter: ArticleAdapter
+    private var articleAdapter: ArticleAdapter? = null
     override val viewModel = ListFragmentViewModel::class.java
     override fun getBindingVariable() = BR.listViewModel
     override fun getLayoutId() = R.layout.fragment_list
@@ -59,21 +59,28 @@ class ListFragment : BaseFragment<FragmentListBinding, ListFragmentViewModel>(),
     override fun setAdapter(list: ArrayList<Any>) {
         this.list = list
 
-        if (this::articleAdapter.isInitialized) {
-            val diffCallback = ArticleDiffUtils(articleAdapter.getItems(), list)
+        if (articleAdapter != null) {
+            val diffCallback = ArticleDiffUtils(articleAdapter!!.getItems(), list)
             val diffResult = DiffUtil.calculateDiff(diffCallback)
 
             val recyclerViewState: Parcelable? =
                 recyclerViewArticles.layoutManager?.onSaveInstanceState()
 
-            articleAdapter.diffUtilRefresh(diffResult, list)
+            articleAdapter!!.diffUtilRefresh(diffResult, list)
 
             recyclerViewState?.let {
                 recyclerViewArticles.layoutManager?.onRestoreInstanceState(it)
             }
+
+            recyclerViewArticles.apply {
+                if (this.adapter == null) {
+                    this.adapter = articleAdapter
+                }
+            }
+
         } else {
             initRecyclerViewAndAdapter()
-            articleAdapter.setItems(list)
+            articleAdapter?.setItems(list)
         }
     }
 
@@ -84,7 +91,7 @@ class ListFragment : BaseFragment<FragmentListBinding, ListFragmentViewModel>(),
     }
 
     override fun clearItems() {
-        articleAdapter.clearItems()
+        articleAdapter?.clearItems()
     }
 
     override fun diplayErrorToast(error: String) {
@@ -93,6 +100,7 @@ class ListFragment : BaseFragment<FragmentListBinding, ListFragmentViewModel>(),
 
     override fun clearResources() {
         recyclerViewArticles.adapter = null
+        articleAdapter = null
     }
 
     // endregion
