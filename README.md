@@ -9,7 +9,7 @@ Using MVVM architecture with clean architecture
 
 Libraries used
 
-1) Dagger2
+1) Hilt
 2) RxJava
 3) Glide
 4) Jetifier
