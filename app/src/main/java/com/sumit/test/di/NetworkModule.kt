@@ -1,17 +1,19 @@
-package com.sumit.test.di.modules
+package com.sumit.test.di
 
-import com.sumit.core.di.scopes.PerApplication
 import com.sumit.core.domain.remote.GsonProvider
 import com.sumit.core.domain.remote.NetworkUtil
 import com.sumit.test.BuildConfig
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
-class NetworkModule {
-
+@InstallIn(SingletonComponent::class)
+object NetworkModule {
     @Provides
-    @PerApplication
+    @Singleton
     fun provideNetworkService(
         gsonProvider: GsonProvider
     ) = NetworkUtil(

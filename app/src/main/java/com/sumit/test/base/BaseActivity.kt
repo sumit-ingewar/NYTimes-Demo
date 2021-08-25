@@ -1,65 +1,38 @@
 package com.sumit.test.base
 
 import android.os.Bundle
-import androidx.annotation.LayoutRes
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import com.sumit.test.R
-import dagger.android.support.DaggerAppCompatActivity
+import android.view.LayoutInflater
+import androidx.appcompat.app.AppCompatActivity
+import androidx.viewbinding.ViewBinding
 import io.reactivex.disposables.CompositeDisposable
-import javax.inject.Inject
 
-abstract class BaseActivity<VDB : ViewDataBinding, BVM : BaseViewModel<*>> :
-    DaggerAppCompatActivity() {
+abstract class BaseActivity<VB : ViewBinding> :
+    AppCompatActivity() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private var _binding: ViewBinding? = null
+    abstract val bindingInflater: (LayoutInflater) -> VB
 
-    lateinit var injectedViewModel: BVM
-
-    lateinit var viewDataBinding: VDB
-
-    abstract val viewModel: Class<BVM>
-
-    abstract fun getBindingVariable(): Int
-
-    @get:LayoutRes
-    abstract val layoutId: Int
+    @Suppress("UNCHECKED_CAST")
+    protected val viewBinding: VB
+        get() = _binding as VB
 
     private val disposableDelegate = lazy { CompositeDisposable() }
-
     private val compositeDisposable by disposableDelegate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        performDataBinding()
-
+        _binding = bindingInflater.invoke(layoutInflater)
+        setContentView(requireNotNull(_binding).root)
         initUserInterface()
-
     }
 
     protected abstract fun initUserInterface()
 
-    protected open fun getBaseFragmeLayoutId() =
-        R.id.activity_base_fragment_container
-
-
-    private fun performDataBinding() {
-
-        viewDataBinding = DataBindingUtil.setContentView(this, layoutId)
-        injectedViewModel = ViewModelProviders.of(this, viewModelFactory).get(viewModel)
-        viewDataBinding.setVariable(getBindingVariable(), injectedViewModel)
-        viewDataBinding.executePendingBindings()
-
-    }
-
     override fun onDestroy() {
-        if(disposableDelegate.isInitialized()){
+        super.onDestroy()
+        if (disposableDelegate.isInitialized()) {
             compositeDisposable.dispose()
         }
-        super.onDestroy()
+        _binding = null
     }
 }

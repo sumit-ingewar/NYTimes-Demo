@@ -11,8 +11,10 @@ import com.sumit.test.base.BaseViewModel
 import com.sumit.test.ui.fragment.item.ArticleItemViewType
 import com.sumit.test.ui.fragment.item.ArticleViewType
 import com.sumit.test.ui.fragment.mapper.ArticleMapper
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+@HiltViewModel
 class ListFragmentViewModel @Inject constructor(
     private val articleUseCase: ArticleUseCase
 ) : BaseViewModel<ListFragmentNavigator>() {

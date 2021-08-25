@@ -2,14 +2,15 @@ package com.sumit.test.ui.fragment
 
 import android.os.Bundle
 import android.os.Parcelable
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sumit.test.BR
 import com.sumit.test.R
 import com.sumit.test.base.BaseFragment
 import com.sumit.test.base.ItemClickListener
@@ -17,41 +18,38 @@ import com.sumit.test.databinding.FragmentListBinding
 import com.sumit.test.ui.fragment.adapter.ArticleAdapter
 import com.sumit.test.ui.fragment.adapter.ArticleDiffUtils
 import com.sumit.test.ui.fragment.item.ArticleItem
-import kotlinx.android.synthetic.main.fragment_list.*
+import dagger.hilt.android.AndroidEntryPoint
 
-
-class ListFragment : BaseFragment<FragmentListBinding, ListFragmentViewModel>(),
+@AndroidEntryPoint
+class ListFragment :  BaseFragment<FragmentListBinding>(),
     ListFragmentNavigator, ItemClickListener {
 
     // region VARIABLES
 
+    override val bindingInflater: (LayoutInflater) -> FragmentListBinding
+        get() = FragmentListBinding::inflate
+
+
     private var articleAdapter: ArticleAdapter? = null
-    override val viewModel = ListFragmentViewModel::class.java
-    override fun getBindingVariable() = BR.listViewModel
+    private val listFragmentViewModel: ListFragmentViewModel by viewModels()
     override fun getLayoutId() = R.layout.fragment_list
 
     private var list: ArrayList<Any> = arrayListOf()
-    private lateinit var sharedViewModel: SharedViewModel
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+
 
     // endregion
 
 
     // region LIFECYCLE
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injectedViewModel.setNavigator(this)
+        listFragmentViewModel.setNavigator(this)
     }
 
-
     override fun initUserInterface(view: View?) {
-
-        injectedViewModel.getArticlesList()
-
-        sharedViewModel = activity?.run {
-            ViewModelProviders.of(this)
-                .get(SharedViewModel::class.java)
-        } ?: throw Exception("Invalid Activity")
-
+        listFragmentViewModel.getArticlesList()
     }
     // endregion
 
@@ -64,17 +62,17 @@ class ListFragment : BaseFragment<FragmentListBinding, ListFragmentViewModel>(),
             val diffResult = DiffUtil.calculateDiff(diffCallback)
 
             val recyclerViewState: Parcelable? =
-                recyclerViewArticles.layoutManager?.onSaveInstanceState()
+                binding.recyclerViewArticles.layoutManager?.onSaveInstanceState()
 
             articleAdapter!!.diffUtilRefresh(diffResult, list)
 
             recyclerViewState?.let {
-                recyclerViewArticles.layoutManager?.onRestoreInstanceState(it)
+                binding.recyclerViewArticles.layoutManager?.onRestoreInstanceState(it)
             }
 
-            recyclerViewArticles.apply {
-                if (this.adapter == null) {
-                    this.adapter = articleAdapter
+            binding.recyclerViewArticles.apply {
+                if (adapter == null) {
+                    adapter = articleAdapter
                 }
             }
 
@@ -86,7 +84,8 @@ class ListFragment : BaseFragment<FragmentListBinding, ListFragmentViewModel>(),
 
     override fun onItemClick(position: Int, view: View) {
         sharedViewModel.articleUrl((list[position] as ArticleItem).url)
-        findNavController().navigate(R.id.details_fragment)
+        val action = ListFragmentDirections.actionDetails()
+        view.findNavController().navigate(action)
 
     }
 
@@ -99,7 +98,7 @@ class ListFragment : BaseFragment<FragmentListBinding, ListFragmentViewModel>(),
     }
 
     override fun clearResources() {
-        recyclerViewArticles.adapter = null
+        binding.recyclerViewArticles.adapter = null
         articleAdapter = null
     }
 
@@ -109,7 +108,7 @@ class ListFragment : BaseFragment<FragmentListBinding, ListFragmentViewModel>(),
     // region UTIL
     private fun initRecyclerViewAndAdapter() {
         articleAdapter = ArticleAdapter(this)
-        recyclerViewArticles.apply {
+        binding.recyclerViewArticles.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = articleAdapter
             addItemDecoration(

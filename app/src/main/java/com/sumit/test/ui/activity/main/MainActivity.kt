@@ -1,25 +1,25 @@
 package com.sumit.test.ui.activity.main
 
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import com.sumit.core.util.PreferenceManager
-import com.sumit.test.BR
 import com.sumit.test.R
 import com.sumit.test.base.BaseActivity
 import com.sumit.test.databinding.ActivityMainBinding
-import java.lang.IllegalStateException
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-class MainActivity : BaseActivity<ActivityMainBinding, MainActivityViewModel>(),
+@AndroidEntryPoint
+class MainActivity : BaseActivity<ActivityMainBinding>(),
     MainActivityNavigator {
 
     // region VARIABLES
-    override val viewModel = MainActivityViewModel::class.java
-    override fun getBindingVariable() = BR.activityViewModel
-    override val layoutId = R.layout.activity_main
+
+    override val bindingInflater: (LayoutInflater) -> ActivityMainBinding
+        get() = ActivityMainBinding::inflate
 
     @Inject
     lateinit var preferenceManager: PreferenceManager
@@ -27,8 +27,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityViewModel>(),
     // endregion
 
     // region LIFECYCLE
+
     override fun initUserInterface() {
-        setSupportActionBar(viewDataBinding.toolbar)
+        setSupportActionBar(viewBinding.toolbar)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -52,5 +53,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityViewModel>(),
             else -> throw IllegalStateException("Can not handle this menu")
         }
     }
+
     // endregion
 }
