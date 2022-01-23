@@ -21,8 +21,6 @@ abstract class SingleUseCase<T : BaseResponse, Params>(private val postExecution
 
     companion object {
         private const val SOMETHING_WENT_WRONG = "Something went wrong , please try again later"
-        private const val RESPONSE_ERROR = "RESPONSE_ERROR"
-        private const val NETWORK_ERROR = "NETWORK_ERROR"
     }
 
     private val threadScheduler: Scheduler = Schedulers.io()
