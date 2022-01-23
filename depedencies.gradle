@@ -15,11 +15,6 @@ ext.repos = {
         handler.jcenter()
 }
 
-ext.java = [
-        sourceCompatibility: JavaVersion.VERSION_1_8,
-        targetCompatibility: JavaVersion.VERSION_1_8,
-]
-
 ext.endPoints = [
         dev: "\"https://api.nytimes.com/\"",
 ]
