@@ -5,6 +5,7 @@ import com.sumit.core.DemoLogger
 import com.sumit.core.domain.executor.PostExecutionThread
 import com.sumit.core.domain.remote.*
 import com.sumit.core.domain.rxcallback.CallbackWrapper
+import com.sumit.core.extensions.TAG
 import com.sumit.core.extensions.empty
 import com.sumit.core.extensions.safeGet
 import io.reactivex.Scheduler
@@ -18,21 +19,13 @@ import java.util.concurrent.TimeoutException
 
 abstract class SingleUseCase<T : BaseResponse, Params>(private val postExecutionThread: PostExecutionThread) {
 
-    val TAG = SingleUseCase::class.java.simpleName
-
     companion object {
         private const val SOMETHING_WENT_WRONG = "Something went wrong , please try again later"
         private const val RESPONSE_ERROR = "RESPONSE_ERROR"
         private const val NETWORK_ERROR = "NETWORK_ERROR"
     }
 
-    private val threadScheduler: Scheduler
-
-    private val useCaseListener: UseCaseListener? = null
-
-    init {
-        threadScheduler = Schedulers.io()
-    }
+    private val threadScheduler: Scheduler = Schedulers.io()
 
     abstract fun buildUseCase(params: Params?): Single<T>
 
@@ -49,17 +42,10 @@ abstract class SingleUseCase<T : BaseResponse, Params>(private val postExecution
             .subscribeOn(threadScheduler)
             .observeOn(postExecutionThread.scheduler())
 
-        useCaseListener?.onPreExecute()
-
         return single.subscribe({ result ->
-
-            useCaseListener?.onPostExecute()
-
             callbackWrapper.onApiSuccess(result)
-
         }, { exception ->
 
-            useCaseListener?.onPostExecute()
             val baseError: BaseError
             when (exception) {
                 is HttpException -> {
